@@ -1,15 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
+  <Config @tokenSave="onToken" v-if="!hasToken" />
+  <Dashboard v-if="hasToken" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Config from './components/Config.vue';
+import Dashboard from './components/Dashboard.vue';
 
 export default {
   name: 'App',
+  setup() {
+    const hasToken = localStorage.getItem('token')?.length > 0;
+
+    return {
+      hasToken,
+    };
+  },
+  methods: {
+    onToken() {
+      this.hasToken = true;
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    Config,
+    Dashboard,
+  },
+};
 </script>
